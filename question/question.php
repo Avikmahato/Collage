@@ -147,8 +147,8 @@
 
 <body>
     <?php
-    include("../connection.php");
     include("../nav.php");
+    include("../connection.php");
 
     ?>
     <div style="background-image: linear-gradient(60deg, #96deda 0%, #50c9c3 100%);;">
@@ -187,7 +187,8 @@
                     </tr>
                 </thead>
                 <tbody>';
-                    $query = "SELECT * FROM questions";
+                    $sem=$_SESSION['p_sem'];
+                    $query = "SELECT * FROM questions $sem;";
                     try {
                         $run = mysqli_query($connection, $query);
                     } catch (Exception $e) {
@@ -334,8 +335,6 @@ if (isset($_POST['submit'])) {
     $sem = $_POST['semester'];
     $docs_name = $_FILES['docs']['name'];
     $docs_type = $_FILES['docs']['type'];
-    echo $docs_type;
-    print_r($_FILES['docs']);
     $path = "../docs/" . $docs_name;
     if ($docs_type == "application/pdf") {
         $query = "INSERT INTO questions(Title,Department,Semester,File)

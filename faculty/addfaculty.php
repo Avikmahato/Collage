@@ -101,21 +101,8 @@ include("../nav.php");
                 <input type="submit" name="submit" value="submit" id="submit">
             </div>
         </form>
-        <?php
-            include("../menu.php");
-            include("../failed.php");
-        ?>
     </main>
-    <script src="../failed.js"></script>
-    <script src="../menu.js"></script>
-    <script>
-        document.getElementById("profile").onchange = function() {
-            let setprofile = document.getElementById("profile_view");
-            setprofile.src = URL.createObjectURL(document.getElementById("profile").files[0]);
-        }
-    </script>
 </body>
-
 </html>
 <?php
 include("../connection.php");
@@ -131,7 +118,7 @@ if ($connection) {
         $email=filter_input(INPUT_POST,'email',FILTER_VALIDATE_EMAIL);
         $mobile=filter_input(INPUT_POST,'mobile',FILTER_VALIDATE_INT);
         $special = $_POST['specialization'];
-        $path="profiles/".$profile_name;
+        $path="../profiles/".$profile_name;
         $query="INSERT INTO professors(f_id,Profile,Name,Age,Gender,Education,Specialization,email,mobile)
         VALUES
         ('$id','$profile_name','$name','$age','$gender','$educ','$special','$email','$mobile');";
@@ -139,19 +126,36 @@ if ($connection) {
             $run=mysqli_query($connection,$query);
         }
         catch(Exception $e){
-            echo "
-            <script>
-                fopen();
-            </script>
-            ";
         }
         if(isset($run)){
             move_uploaded_file($profile_tmp_name,$path);
             echo "
             <script>
-                open();
-                window.location.href='#';
+                Swal.fire({
+                imageUrl: '../success.gif',
+                imageHeight: 250,
+                title:'Succesfully Added',
+                text:'Faculty Member Is Added Succesfully.',
+                imageAlt: 'A tall image'
+            }).then(()=>{
+                window.location.href='faculty.php';
+            });
             </script>";
+        }
+        else{
+            echo "
+            <script>
+                Swal.fire({
+                imageUrl: '../failed.gif',
+                imageHeight: 250,
+                title:'Failed!!!',
+                text:'Faculty Member Is Added Failed',
+                imageAlt: 'A tall image'
+            }).then(()=>{
+                window.location.href='faculty.php';
+            });
+            </script>";
+            
         }
     }
 }

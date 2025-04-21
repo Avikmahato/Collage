@@ -46,7 +46,6 @@ if (!isset($_SESSION['role'])) {
         ?>
         <label for="respon">
             <?php
-            // session_start();
             echo '<img src="../profiles/' . $_SESSION['profile_pic'] . '" alt="error">';
             echo '<div>';
             echo '<p>' . $_SESSION['p_id'] . '</p>';

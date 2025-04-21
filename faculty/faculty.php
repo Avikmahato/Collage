@@ -25,7 +25,7 @@ include("../nav.php");
             while ($data = mysqli_fetch_assoc($result)) {
                 echo "<div class='profs'>";
                 echo '<div class="faculty_image">';
-                echo "<img src='profiles/".$data['Profile']."' alt=''>";
+                echo "<img src='../profiles/".$data['Profile']."' alt=''>";
                 echo '</div>';
                 echo '<div class="namedeg"> ';
                 echo "<big style='font-weight:600;'>" . $data['Name'] . "</big>";

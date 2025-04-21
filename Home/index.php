@@ -6,6 +6,7 @@ if (!isset($_SESSION['role'])) {
     $_SESSION['profile_pic'] = "profile.jpg";
     $_SESSION['role'] = 'public';
     $_SESSION['p_dept'] = '';
+    $_SESSION['p_sem']='';
 }
 ?>
 <!DOCTYPE html>
@@ -131,7 +132,6 @@ if (!isset($_SESSION['role'])) {
                 echo '<a href="../attendance/view_student.php">Student Attendance</a>';
                 echo '<a href="#">Your Rating</a>';
                 echo '<a href="../question/question.php">Add Questions</a>';
-                echo '<a href="#">Today Questions</a>';
                 echo '<a href="../signout.php">Log Out</a>';
             }
             ?>

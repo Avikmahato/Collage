@@ -45,7 +45,7 @@
             <div class="student_id">
                 <div for="student_id">
                     <i class="fa-solid fa-user"></i>
-                    <input name="s_id" type="text" placeholder="STUDENT ID" id="student_id" />
+                    <input name="s_id" type="text" placeholder="STUDENT ID" id="student_id" required/>
                 </div>
             </div>
             <div class="student_reg">

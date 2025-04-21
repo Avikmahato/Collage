@@ -20,6 +20,7 @@ if (isset($_POST['Login'])) {
                     $_SESSION['profile_pic'] = $data['profile'];
                     $_SESSION['role'] = "professor";
                     $_SESSION['p_name'] = $data['Name'];
+                    $_SESSION['p_sem'] = '';
                     echo "
                     <script>
                     window.location.href='../home/index.php';
@@ -27,7 +28,15 @@ if (isset($_POST['Login'])) {
                 } else {
                     echo "
                     <script>
-                    window.alert('Login Failed');
+                    Swal.fire({
+                    imageUrl: '../failed.gif',
+                    imageHeight: 150,
+                    title:'Login Failed!!!',
+                    text:'Something Is Wrong',
+                    imageAlt: 'A tall image'
+                    }).then(()=>{
+                    window.location.href='../login/index.php';
+            });
                     </script>";
                 }
             }
@@ -41,44 +50,41 @@ if (isset($_POST['Login'])) {
 }
 if (isset($_POST['submit'])) {
     $student_id = $_POST['s_id'];
-    $email=filter_input(INPUT_POST,'email',FILTER_VALIDATE_EMAIL);
-    $reg=$_POST['reg_no'];
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $reg = $_POST['reg_no'];
     $password = $_POST['pass'];
     // $check=$_POST['check'];
-    $query="SELECT student_id,profile_picture,Name,Registration,Department,email,password FROM students where student_id='$student_id';";
-    $run=mysqli_query($connection,$query);
-    if($run){
-        if(mysqli_num_rows($run)>0){
-            $data=mysqli_fetch_assoc($run);
-            if($email==$data['email'] && $reg==$data['Registration'] && $password==$data['password']){
+    $query = "SELECT student_id,profile_picture,Name,Registration,Department,Semester,email,password FROM students where student_id='$student_id';";
+    $run = mysqli_query($connection, $query);
+    if ($run) {
+        if (mysqli_num_rows($run) > 0) {
+            $data = mysqli_fetch_assoc($run);
+            if ($email == $data['email'] && $reg == $data['Registration'] && $password == $data['password']) {
                 session_start();
                 $_SESSION['p_id'] = $student_id;
                 $_SESSION['profile_pic'] = $data['profile_picture'];
                 $_SESSION['role'] = "student";
                 $_SESSION['p_name'] = $data['Name'];
                 $_SESSION['p_dept'] = $data['Department'];
+                $_SESSION['p_sem'] = 'WHERE Semester=\'' . $data['Semester'] . '\'';
                 echo "
                 <script>
                 window.location.href='../home/index.php';
                 </script>";
-            }
-            else{
+            } else {
                 echo "<script>
                 window.alert('Login Failed');
                 window.location.href='../login/index.php';
                 </script>";
             }
-        }
-        else{
+        } else {
             echo "<script>
                 window.alert('Your Data Is not Available.');
             </script>";
         }
-    }
-    else{
+    } else {
         echo "<script>
             window.alert('Login Golmaal');
         </script>";
     }
 }
-?>
