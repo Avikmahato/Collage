@@ -41,7 +41,7 @@ include("../nav.php");
         mysqli_close($connect);
         ?>
         <?php
-            if($_SESSION['role']=="professor"){
+            if($_SESSION['role']=="admin"){
 
                 echo '<a href="addfaculty.php" class="addprofs">
                     <img src="male.png" alt="">

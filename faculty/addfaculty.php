@@ -42,13 +42,13 @@ include("../nav.php");
                 <label for="fname">
                     Faculty Name :
                 </label>
-                <input type="text" name="fname" id="fname" required>
+                <input type="text" name="fname" id="fname" maxlength="30" required>
             </div>
             <div class="agediv">
                 <label for="age">
                     Age :
                 </label>
-                <input type="text" name="age" id="age" required>
+                <input type="text" name="age" id="age" maxlength="2" required>
             </div>
             <div class="genderdiv">
                 <label for="age" style="font-weight: 600; margin-right: 1.2rem;">
@@ -73,29 +73,47 @@ include("../nav.php");
                     <input type="radio" name="gender" value="Other" id="gender" required>
                 </div>
             </div>
+            <div class="Designationdiv">
+                <label for="Designation">
+                    Designation :
+                </label>
+                <input type="text" name="designation" id="Designation" maxlength="20" required>
+            </div>
+            <div class="Deptdiv">
+                <label for="Dept">
+                    Department :
+                </label>
+                <input type="text" name="dept" id="Dept" maxlength="20" required>
+            </div>
             <div class="Educationdiv">
                 <label for="Education">
-                    Education :
+                    Qualification :
                 </label>
-                <input type="text" name="education" id="Education" required>
+                <input type="text" name="education" id="Education" maxlength="300" required>
+            </div>
+            <div class="Experiencediv">
+                <label for="Experience">
+                    Experience :
+                </label>
+                <input type="text" name="experience" id="Experience" maxlength="200" required>
             </div>
             <div class="specializationdiv">
                 <label for="specialization">
                     Specialize In :
                 </label>
-                <input type="text" name="specialization" id="specialization" required>
+                <input type="text" name="specialization" id="specialization" maxlength="150" required>
             </div>
             <div class="emaildiv">
                 <label for="email">
                     Email :
                 </label>
-                <input type="text" name="email" id="email" required>
+                <input type="text" name="email" id="email" maxlength="100" required>
             </div>
             <div class="mobilediv">
                 <label for="mobile">
                     Mobile :
                 </label>
-                <input type="text" name="mobile" id="mobile" required>
+                <input type="text" name="mobile" id="mobile" maxlength="13" required>
             </div>
             <div class="submitdiv">
                 <input type="submit" name="submit" value="submit" id="submit">
@@ -114,14 +132,17 @@ if ($connection) {
         $profile_tmp_name=$_FILES['profile']['tmp_name'];
         $gender=$_POST['gender'];
         $id = $_POST['fid'];
+        $desig=$_POST['designation'];
+        $dept=$_POST['dept'];
+        $exper=$_POST['experience'];
         $educ = $_POST['education'];
         $email=filter_input(INPUT_POST,'email',FILTER_VALIDATE_EMAIL);
         $mobile=filter_input(INPUT_POST,'mobile',FILTER_VALIDATE_INT);
         $special = $_POST['specialization'];
         $path="../profiles/".$profile_name;
-        $query="INSERT INTO professors(f_id,Profile,Name,Age,Gender,Education,Specialization,email,mobile)
+        $query="INSERT INTO professors(f_id,Profile,Name,Age,Gender,Designation,Department,Qualification,Experience,Specialization,email,mobile)
         VALUES
-        ('$id','$profile_name','$name','$age','$gender','$educ','$special','$email','$mobile');";
+        ('$id','$profile_name','$name','$age','$gender','$desig','$dept','$educ','$exper','$special','$email','$mobile');";
         try{
             $run=mysqli_query($connection,$query);
         }

@@ -367,9 +367,15 @@ if (isset($_POST['submit'])) {
             </script>
         ";
     } else {
-        echo "<p>
-        The File Type Should Be Application Pdf.;
-    </p>";
+        echo '
+        <script>
+        Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "The File Type Must Be Application/pdf",
+        });
+        </script>
+        ';
     }
 }
 if (isset($_REQUEST['id']) && isset($_REQUEST['path'])) {

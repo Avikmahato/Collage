@@ -50,19 +50,19 @@
             </div>
             <div class="student_reg">
                 <div for="student_reg">
-                    <input name="reg_no" type="text" placeholder="REGISTRATION NO" id="student_reg" />
+                    <input name="reg_no" type="text" placeholder="REGISTRATION NO" id="student_reg" required/>
                     <i class="fa-solid fa-registered"></i>
                 </div>
             </div>
             <div class="semail">
                 <div for="semail">
                     <i class="fa-solid fa-at"></i>
-                    <input type="text" placeholder="EMAIL" id="semail" name="email" />
+                    <input type="text" placeholder="EMAIL" id="semail" name="email" required/>
                 </div>
             </div>
             <div class="password">
                 <div for="password">
-                    <input name="pass" type="password" placeholder="PASSWORD" id="password" />
+                    <input name="pass" type="password" placeholder="PASSWORD" id="password" required/>
                     <i class="fa-solid fa-key"></i>
                 </div>
             </div>
@@ -78,24 +78,24 @@
             <div class="student_id">
                 <div for="student_id">
                     <i class="fa-solid fa-user"></i>
-                    <input type="text" placeholder="FACULTY ID" id="student_id" name="f_id" />
+                    <input type="text" placeholder="FACULTY ID" id="student_id" name="f_id" required/>
                 </div>
             </div>
             <div class="email">
                 <div for="email">
-                    <input type="text" placeholder="EMAIL" id="email" name="email" />
+                    <input type="text" placeholder="EMAIL" id="email" name="email" required/>
                     <i class="fa-solid fa-at"></i>
                 </div>
             </div>
             <div class="mobile">
                 <div for="mobile">
                     <i class="fa-solid fa-mobile-screen"></i>
-                    <input minlength="10" maxlength="10" type="text" placeholder="MOBILE" id="mobile" name="mobile" />
+                    <input minlength="10" maxlength="10" type="text" placeholder="MOBILE" id="mobile" name="mobile" required/>
                 </div>
             </div>
             <div class="password">
                 <div for="password">
-                    <input minlength="8" type="password" placeholder="PASSWORD" id="password" name="password" />
+                    <input minlength="8" type="password" placeholder="PASSWORD" id="password" name="password" required/>
                     <i class="fa-solid fa-lock"></i>
                 </div>
             </div>

@@ -183,10 +183,18 @@
             ('$p_id','$profile','$name','$dept','$message')";
                 $run = mysqli_query($connection, $query);
                 if ($run) {
-                    echo "<script>
-                window.alert('Submitted');
-                window.location.href='index.php';
-                </script>";
+                    echo "
+                    <script>
+                    Swal.fire({
+                        imageUrl: '../success.gif',
+                        imageHeight: 250,
+                        title:'Succesfull',
+                        text:'Feedback Is Submited.',
+                        imageAlt: 'A tall image'
+                    }).then(()=>{
+                        window.location.href='index.php';
+                    });
+                    </script>";
                 } else {
                     echo "<script>
                 window.alert('Not Submitted');

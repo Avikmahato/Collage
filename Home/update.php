@@ -29,17 +29,30 @@ if ($connection) {
             $update=mysqli_query($connection,$update_profile);
             move_uploaded_file($profile_tmpname, $path);
             $_SESSION['profile_pic']=$profile_name;
-            echo "<script>
-            window.alert('Update Succesfull');
-        </script>";
-            sleep(1);
-            echo "<script>
-            window.location.href='index.php';
-        </script>";
+            echo "
+            <script>
+            Swal.fire({
+                imageUrl: '../success.gif',
+                imageHeight: 250,
+                title:'Update Succesfull',
+                text:'Your Information is Updated',
+                imageAlt: 'A tall image'
+            }).then(()=>{
+                window.location.href='index.php';
+            });
+            </script>";
         } else {
             echo "<script>
-        window.alert('Something Is Wrong');
-    </script>";
+            Swal.fire({
+            imageUrl: '../failed.gif',
+            imageHeight: 150,
+            title:'Update Failed',
+            text:'Your Information Is/'s Updated.',
+            imageAlt: 'A tall image'
+            }).then(()=>{
+            window.location.href='index.php';
+            });
+        </script>";
         }
     }
 }

@@ -34,10 +34,15 @@ setInterval(() => {
 
 function choose(no) {
   document.querySelector(".student_view").style.display = "none";
+  document.querySelector(".professor_view").style.display = "none";
   document.querySelector(".student_profile").style.display = "none";
+  document.querySelector(".head").style.display = "none";
+  document.querySelector(".feedback").style.display = "none";
   document.getElementById("home").style.display = "none";
   if (no === 1) {
     document.getElementById("home").style.display = "flex";
+    document.querySelector(".head").style.display = "block";
+    document.querySelector(".feedback").style.display = "flex";
     clo();
   } else if (no === 2) {
     document.querySelector(".student_view").style.display = "grid";
@@ -46,6 +51,11 @@ function choose(no) {
   } else if (no === 3) {
     document.getElementById("notice").style.display = "none";
     document.querySelector(".student_profile").style.display = "flex";
+    clo();
+  }
+  else if(no===4){
+    document.querySelector(".professor_view").style.display = "grid";
+    document.getElementById("notice").style.display = "none";
     clo();
   }
 }

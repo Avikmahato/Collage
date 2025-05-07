@@ -6,7 +6,7 @@ if (!isset($_SESSION['role'])) {
     $_SESSION['profile_pic'] = "profile.jpg";
     $_SESSION['role'] = 'public';
     $_SESSION['p_dept'] = '';
-    $_SESSION['p_sem']='';
+    $_SESSION['p_sem'] = '';
 }
 ?>
 <!DOCTYPE html>
@@ -104,11 +104,15 @@ if (!isset($_SESSION['role'])) {
                 <a href="../about/about.php">About Us</a>
             <li>
         </ul>
-        <div class="login">
+        <?php
+        if ($_SESSION['role'] == "public") {
+            echo '<div class="login">
             <a href="../login/index.php">
-                <button type="button">Login</button>
+            <button type="button">Login</button>
             </a>
-        </div>
+            </div>';
+        }
+        ?>
     </nav>
     <main>
         <aside id="sidebar">
@@ -127,10 +131,17 @@ if (!isset($_SESSION['role'])) {
                 echo '<a href="../question/question.php">Today Questions</a>';
                 echo '<a href="../signout.php">Log Out</a>';
             } elseif ($_SESSION['role'] == "professor") {
-
+                echo '<a href="index.php" >Home</a>';
+                echo '<a href="#" onclick="choose(4)">Professor Information</a>';
                 echo '<a href="../attendance/attendance.php">View Students</a>';
                 echo '<a href="../attendance/view_student.php">Student Attendance</a>';
                 echo '<a href="#">Your Rating</a>';
+                echo '<a href="../question/question.php">Add Questions</a>';
+                echo '<a href="../signout.php">Log Out</a>';
+            } elseif ($_SESSION['role'] == "admin") {
+                echo '<a href="index.php" >Home</a>';
+                echo '<a href="../attendance/attendance.php">View Students</a>';
+                echo '<a href="../attendance/view_student.php">Student Attendance</a>';
                 echo '<a href="../question/question.php">Add Questions</a>';
                 echo '<a href="../signout.php">Log Out</a>';
             }
@@ -313,144 +324,193 @@ if (!isset($_SESSION['role'])) {
                         </div>
                     </div>
                 </div>
+                <a href="mailto:"></a>
             </div>
         </div>
-        <div class="student">
-            <form class="student_profile" action="update.php" method="post" enctype="multipart/form-data">
-                <div class="picture">
-                    <?php
+        <div class="professor_view">
+            <div class="part_one">
+                <?php
+                try {
                     include("../connection.php");
-                    $s_id = $_SESSION['p_id'];
-                    $query = "SELECT * FROM students where student_id='$p_id';";
-                    $run = mysqli_query($connection, $query);
-                    $data = mysqli_fetch_assoc($run);
-                    echo '<p>Student ID : ' . $data['student_id'] . '</p>';
-                    ?>
-                    <div class="editable_image">
-                        <img id="profile" src="../profiles/<?php echo $data['profile_picture']; ?>" alt="404 error">
-                        <label for="add_profile">
-                            <img src="edit.png" alt="error" id="edit">
-                        </label>
-                        <input type="file" name="profile" id="add_profile" style="display: none;">
+                    $p_id = $_SESSION['p_id'];
+                    $query = "SELECT * FROM professors where f_id='$p_id';";
+                    $result = mysqli_query($connection, $query);
+                    $row = mysqli_fetch_assoc($result);
+                    mysqli_close($connection);
+                    echo '<p>Professor ID :' . $row['f_id'] . '</p>';
+                    echo '<img id="profile" src="../profiles/' . $row['profile'] . '" alt="404 error">';
+                    echo '<p>Name : ' . $row['Name'] . '</p>';
+                    echo '<p>Gender :' . $row['Gender'] . '</p>';
+                    echo '<p>Age :' . $row['Age'] . '</p>';
+                    echo '<p>Mobile :
+                    <a href="tel:' . $row['mobile'] . '">' . $row['mobile'] . '</a></p>';
+                    echo '<p>Email :
+                    <a href="mailto:' . $row['email'] . '">' . $row['email'] . '</a>
+                    </p>';
+                    echo '<p>Department :' . $row['Department'] . '</p>';
+                    echo '</div>';
+                    echo '<div class="part_two">';
+                    echo '<div>
+                                <p>Designation :' . $row['Designation'] . '</p>
+                            </div>
+                            <div>
+                                <p>Specialize In :' . $row['Specialization'] . '</p>
+                            </div>
+                            <div>
+                                <p id="blood">Qualification : ' . $row['Qualification'] . '</p>
+                            </div>
+                            <div >
+                                <p>Experience : ' . $row['Experience'] . '</p>
+                            </div>
+            </div>';
+                } catch (Exception $e) {
+                    echo '<script>
+                    Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "' . $e . '",
+                    footer: /"<a href="#">Why do I have this issue?</a>/"
+                    });
+                    </script>';
+                }
+                ?>
+            </div>
+            <div class="student">
+                <form class="student_profile" action="update.php" method="post" enctype="multipart/form-data">
+                    <div class="picture">
+                        <?php
+                        include("../connection.php");
+                        $s_id = $_SESSION['p_id'];
+                        $query = "SELECT * FROM students where student_id='$p_id';";
+                        $run = mysqli_query($connection, $query);
+                        $data = mysqli_fetch_assoc($run);
+                        echo '<p>Student ID : ' . $data['student_id'] . '</p>';
+                        ?>
+                        <div class="editable_image">
+                            <img id="profile" src="../profiles/<?php echo $data['profile_picture']; ?>" alt="404 error">
+                            <label for="add_profile">
+                                <img src="edit.png" alt="error" id="edit">
+                            </label>
+                            <input type="file" name="profile" id="add_profile" style="display: none;">
+                        </div>
+                        <?php
+                        echo '<p>Name : ' . $data['Name'] . '</p>';
+                        echo '<p>Roll : ' . $data['Roll'] . '</p>';
+                        echo '<p>Registration : ' . $data['Registration'] . '</p>';
+                        echo '<p>Department : ' . $data['Department'] . '</p>';
+                        echo '<p>Semester : ' . $data['Semester'] . '</p>';
+                        ?>
                     </div>
-                    <?php
-                    echo '<p>Name : ' . $data['Name'] . '</p>';
-                    echo '<p>Roll : ' . $data['Roll'] . '</p>';
-                    echo '<p>Registration : ' . $data['Registration'] . '</p>';
-                    echo '<p>Department : ' . $data['Department'] . '</p>';
-                    echo '<p>Semester : ' . $data['Semester'] . '</p>';
-                    ?>
-                </div>
-                <div class="details">
-                    <div>
-                        <label for="fathername">Father Name :</label>
-                        <input type="text" name="father" id="father"
-                            value="<?php echo $data['Father'] ?>">
-                    </div>
-                    <div>
-                        <label for="mothername">Mother Name :</label>
-                        <input type="text" name="mother" id="mother"
-                            value="<?php echo $data['Mother'] ?>">
-                    </div>
-                    <div>
-                        <p>Blood Group </p>
-                        <select name="blood" id="blood"
-                            value="<?php echo $data['Blood'] ?>">
-                            <option value="">Select Blood Group</option>
-                            <option value="A+">A+</option>
-                            <option value="B+">B+</option>
-                            <option value="AB+">AB+</option>
-                            <option value="O+">O+</option>
-                            <option value="A-">A-</option>
-                            <option value="B-">B-</option>
-                            <option value="AB-">AB-</option>
-                            <option value="O-">O-</option>
-                        </select>
-                    </div>
-                    <div id="genderdiv">
-                        <p>Gender :</p>
+                    <div class="details">
                         <div>
-                            <input type="radio" name="gender" id="gender" checked value="" style="display: none;">
-                            Male
-                            <input type="radio" name="gender" id="gender" value="Male"
-                                <?php if ($data['Gender'] == "Male") {
-                                    echo "checked";
-                                }
-                                ?>>
-                            Female
-                            <input type="radio" name="gender" id="gender" value="Female"
-                                <?php if ($data['Gender'] == "Female") {
-                                    echo "checked";
-                                }
-                                ?>>
-                            Transgender
-                            <input type="radio" name="gender" id="gender" value="Transgender"
-                                <?php if ($data['Gender'] == "Transgender") {
-                                    echo "checked";
-                                }
-                                ?>>
-                            Other
-                            <input type="radio" name="gender" id="gender" value="Other"
-                                <?php if ($data['Gender'] == "Other") {
-                                    echo "checked";
-                                }
-                                ?>>
+                            <label for="fathername">Father Name :</label>
+                            <input type="text" name="father" id="father"
+                                value="<?php echo $data['Father'] ?>">
+                        </div>
+                        <div>
+                            <label for="mothername">Mother Name :</label>
+                            <input type="text" name="mother" id="mother"
+                                value="<?php echo $data['Mother'] ?>">
+                        </div>
+                        <div>
+                            <p>Blood Group </p>
+                            <select name="blood" id="blood"
+                                value="<?php echo $data['Blood'] ?>">
+                                <option value="">Select Blood Group</option>
+                                <option value="A+">A+</option>
+                                <option value="B+">B+</option>
+                                <option value="AB+">AB+</option>
+                                <option value="O+">O+</option>
+                                <option value="A-">A-</option>
+                                <option value="B-">B-</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div id="genderdiv">
+                            <p>Gender :</p>
+                            <div>
+                                <input type="radio" name="gender" id="gender" checked value="" style="display: none;">
+                                Male
+                                <input type="radio" name="gender" id="gender" value="Male"
+                                    <?php if ($data['Gender'] == "Male") {
+                                        echo "checked";
+                                    }
+                                    ?>>
+                                Female
+                                <input type="radio" name="gender" id="gender" value="Female"
+                                    <?php if ($data['Gender'] == "Female") {
+                                        echo "checked";
+                                    }
+                                    ?>>
+                                Transgender
+                                <input type="radio" name="gender" id="gender" value="Transgender"
+                                    <?php if ($data['Gender'] == "Transgender") {
+                                        echo "checked";
+                                    }
+                                    ?>>
+                                Other
+                                <input type="radio" name="gender" id="gender" value="Other"
+                                    <?php if ($data['Gender'] == "Other") {
+                                        echo "checked";
+                                    }
+                                    ?>>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="village">Village </label>
+                            <input type="text" id="village" name="village"
+                                value="<?php
+                                        echo $data['Village'];
+                                        ?>">
+                        </div>
+                        <div>
+                            <label for="police">Police Station </label>
+                            <input type="text" id="police" name="police"
+                                value="<?php
+                                        echo $data['Police_Station'];
+                                        ?>">
+                        </div>
+                        <div>
+                            <label for="district">district </label>
+                            <input type="text" id="village" name="district"
+                                value="<?php
+                                        echo $data['District'];
+                                        ?>">
+                        </div>
+                        <div>
+                            <label for="state">State </label>
+                            <input type="text" id="state" name="state"
+                                value="<?php
+                                        echo $data['State'];
+                                        ?>">
+                        </div>
+                        <div>
+                            <label for="mobile">Mobile No </label>
+                            <input type="text" id="mobile" name="mobile"
+                                value="<?php
+                                        echo $data['Mobile'];
+                                        ?>">
+                        </div>
+                        <div>
+                            <label for="email">Email </label>
+                            <input type="text" id="email" name="email"
+                                value="<?php
+                                        echo $data['Email'];
+                                        ?>">
+                        </div>
+                        <div id="save">
+                            <input type="submit" name="save">
                         </div>
                     </div>
-                    <div>
-                        <label for="village">Village </label>
-                        <input type="text" id="village" name="village"
-                            value="<?php
-                                    echo $data['Village'];
-                                    ?>">
-                    </div>
-                    <div>
-                        <label for="police">Police Station </label>
-                        <input type="text" id="police" name="police"
-                            value="<?php
-                                    echo $data['Police_Station'];
-                                    ?>">
-                    </div>
-                    <div>
-                        <label for="district">district </label>
-                        <input type="text" id="village" name="district"
-                            value="<?php
-                                    echo $data['District'];
-                                    ?>">
-                    </div>
-                    <div>
-                        <label for="state">State </label>
-                        <input type="text" id="state" name="state"
-                            value="<?php
-                                    echo $data['State'];
-                                    ?>">
-                    </div>
-                    <div>
-                        <label for="mobile">Mobile No </label>
-                        <input type="text" id="mobile" name="mobile"
-                            value="<?php
-                                    echo $data['Mobile'];
-                                    ?>">
-                    </div>
-                    <div>
-                        <label for="email">Email </label>
-                        <input type="text" id="email" name="email"
-                            value="<?php
-                                    echo $data['Email'];
-                                    ?>">
-                    </div>
-                    <div id="save">
-                        <input type="submit" name="save">
-                    </div>
-                </div>
-                <?php
-                mysqli_close($connection);
-                ?>
-            </form>
-        </div>
-        <?php
-        include("../feedback/feedback.php");
-        ?>
+                    <?php
+                    mysqli_close($connection);
+                    ?>
+                </form>
+            </div>
+            <?php
+            include("../feedback/feedback.php");
+            ?>
     </main>
     <?php
     include("../footer/footer.php");

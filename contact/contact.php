@@ -21,16 +21,16 @@
       <div class="contact-persons">
         <div class="contact-person">
           <h2>Avijit Roy</h2>
-          <p><strong>Mobile:</strong> +91 9932667579</p>
+          <p><strong>Mobile:</strong><a href="tel: +91 9932667579">+91 9932667579</a></p>
         </div>
 
         <div class="contact-person">
           <h2>Tamal Chatterjee</h2>
-          <p><strong>Mobile:</strong> +91 9851177856</p>
+          <p><strong>Mobile:</strong> <a href="tel:+91 9851177856">+91 9851177856</a></p>
         </div>
         <div class="contact-person">
           <h2>Pridip Kumar Mahato</h2>
-          <p><strong>Mobile:</strong> +91 9932711293</p>
+          <p><strong>Mobile:</strong><a href="+91 9932711293">+91 9932711293</a> </p>
         </div>
       </div>
     </div>

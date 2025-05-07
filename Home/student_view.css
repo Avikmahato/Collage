@@ -3,7 +3,7 @@
     margin: 0;
     box-sizing: border-box;
 }
-.student_view{
+.student_view,.professor_view{
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(min(350px,100%),1fr));
@@ -15,13 +15,12 @@
     background-color: aliceblue;
 }
 .part_one{
-    
     font-family: "Fausina";
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    padding: 1rem 1rem;
+    padding: 1rem .4rem;
     background-color: rgb(255, 255, 255);
     border-radius: 12px;
     letter-spacing: .12rem;
@@ -29,7 +28,7 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .part_one p{
-    width: 250px;
+    width: fit-content;
 }
 .part_two{
     display: flex;
@@ -37,11 +36,14 @@
     font-family: "fausina";
     justify-content: space-evenly;
     background-color: rgb(238, 255, 249);
-    padding: 1rem 1rem;
+    padding: 1rem 2rem;
     border-radius: 12px;
     font-weight: 600;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     letter-spacing: .1rem;
+}
+.part_two p{
+    width: 350px;
 }
 .part_three{
     background-color: rgb(255, 255, 255);

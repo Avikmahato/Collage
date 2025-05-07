@@ -4,7 +4,7 @@ if (!isset($_SESSION['role'])) {
     $_SESSION['p_id'] = "7777N";
     $_SESSION['p_name'] = "BIST";
     $_SESSION['profile_pic'] = "profile.jpg";
-    $_SESSION['role'] = 'purulia';
+    $_SESSION['role'] = 'public';
 }
 ?>
 <!DOCTYPE html>
@@ -38,7 +38,7 @@ if (!isset($_SESSION['role'])) {
     </header>
     <nav>
         <?php
-        if ($_SESSION['role'] != 'purulia') {
+        if ($_SESSION['role'] != 'public') {
             echo '<div>';
             echo '<i class="fa-solid fa-bars" id="menu" onclick="op()"></i>';
             echo '</div>';
@@ -95,11 +95,15 @@ if (!isset($_SESSION['role'])) {
                 <a href="../about/about.php">About Us</a>
             <li>
         </ul>
-        <div class="login">
+        <?php
+        if ($_SESSION['role'] == "public") {
+            echo '<div class="login">
             <a href="../login/index.php">
-                <button type="button">Login</button>
+            <button type="button">Login</button>
             </a>
-        </div>
+            </div>';
+        }
+        ?>
     </nav>
     <main>
     </main>
